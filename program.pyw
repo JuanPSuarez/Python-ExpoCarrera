@@ -36,24 +36,28 @@ def cambiarPaso():
     match btnCalcMsg.get():
         case "Comenzar":
             btnCalcMsg.set("Paso 1")
-            calculo2()
+            calculo1()
         case "Paso 1":
             btnCalcMsg.set("Paso 2")
-            calculo3()
+            calculo2()
         case "Paso 2":
             btnCalcMsg.set("Paso 3")
-            calculo4()
+            calculo3()
         case "Paso 3":
             btnCalcMsg.set("Paso 4")
-            calculo5()
+            calculo4()
         case "Paso 4":
             btnCalcMsg.set("Paso 5")
-            calculo6()
+            calculo5()
         case "Paso 5":
             btnCalcMsg.set("Paso 6")
+            calculo6()
         case "Paso 6":
+            btnCalcMsg.set("Finalizar")
+            calculo7()
+        case "Finalizar":
             btnCalcMsg.set("Comenzar")
-            asignarTexto(lblResultado, f"¡{numR}!")
+            calculo8()
             
 
 
@@ -74,7 +78,8 @@ def cambiarPaso():
         
         
 
-
+def calculo1():
+    asignarTexto(textUsuario, "Necesito que pienses... Un numero de 2 cifras no iguales.")
 def calculo2():
     asignarTexto(textUsuario, "Inverti el orden de las cifras.")
     
@@ -89,13 +94,18 @@ def calculo6():
     inNumero1.pack()
     inNumero2.pack()
 def calculo7():
-    num1Cuenta = inNumero1.get()
-    num2Cuenta = inNumero2.get()
+    asignarTexto(textUsuario, "El numero es...")
+    num2Cuenta = int(inNumero2.get())
     inNumero1.pack_forget()
     inNumero2.pack_forget()
-    numR = num1Cuenta
+    r1 =int((num2Cuenta-2)/2)
+    r2 =int((num2Cuenta+2)/2)
+    numR = str(r1) + str(r2)
     lblResultado.pack()
-
+    asignarTexto(lblResultado, f"¡{numR}!")
+def calculo8():
+    asignarTexto(textUsuario, "Necesito que pienses... Un numero de 2 cifras no iguales.")
+    asignarTexto(lblResultado, "")
 
 
 
@@ -120,16 +130,16 @@ btnIngresar.pack()
 inNumero1 = Entry(programFrame)
 #Al hacer click, se borra el texto
 inNumero1.bind("<Button-1>", lambda e: inNumero1.delete(0, END))
-inNumero1.insert(0, "prueba")
+inNumero1.insert(0, "Primer numero")
 
 inNumero2 = Entry(programFrame)
 #Al hacer click, se borra el texto
 inNumero2.bind("<Button-1>", lambda e: inNumero2.delete(0, END))
-inNumero2.insert(0, "prueba")
+inNumero2.insert(0, "Segundo Numero")
 
 
 #Label
-textUsuario=Label(programFrame, text="Necesito que pienses... Un numero de 2 cifras no iguales.")
+textUsuario=Label(programFrame, text="Bienvenido, voy a adivinar el numero que pienses c:")
 textUsuario.pack()
 lblResultado=Label(programFrame, text="El numero que pensaste es ...")
 

@@ -1,6 +1,6 @@
-# Python-ExpoCarrera
+# Desarrollo de Software - ExpoCarrera
 
-### Software expocarrera
+### Software expocarrera - Suarez Juan Pablo - 2do Año
 
 
 En relación con el evento de la expocarrera que tendrá lugar en ... el día 29/09/2022 los cursos de 1er y 2do año desarrollarán un software interactivo en el cual los usuarios piensen un número y la PC “se los adivinará”. El software contará con un menú inicial en donde se permita elegir el idioma Español o Inglés, luego pide algunos números y que el usuarios desarrolle operaciones de aritmética básica.
