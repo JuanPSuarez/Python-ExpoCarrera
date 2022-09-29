@@ -1,8 +1,26 @@
 from tkinter import *
 
 ventana = Tk()
-ventana.geometry("300x300")
+ventana.geometry("500x200")
 ventana.title("Adivina adivinador")
+
+mayorOmenor = IntVar()
+
+def calcularRTA(n1, n2):
+
+    pivot = n1 / 9
+
+    if mayorOmenor.get() == 1:
+         d1 = (n2 - pivot) / 2
+         d2 = (n2 + pivot) / 2
+         rta = int(d1) * 10 + int(d2)
+    
+    if mayorOmenor.get() == 2:
+         d1 = (n2 - pivot) / 2
+         d2 = (n2 + pivot) / 2
+         rta = int(d2) * 10 + int(d1)
+
+    return rta
 
 
 def asignarTexto(a, b):
@@ -85,23 +103,32 @@ def calculo2():
     
 def calculo3():
     asignarTexto(textUsuario, "¿El nuevo número es mayor o menor que el primero?")
+    RadioMenor.grid()
+    RadioMayor.grid()
 def calculo4():
     asignarTexto(textUsuario, "Entonces, restá el número que pensaste del nuevo número")
+    RadioMenor.grid_remove()
+    RadioMayor.grid_remove()
 def calculo5():
     asignarTexto(textUsuario, "Ahora sumá las cifras del número que pensaste al principio")
 def calculo6():
     asignarTexto(textUsuario, "Decime los números que obtuviste")
-    inNumero1.pack()
-    inNumero2.pack()
-def calculo7():
+    inNumero1.grid()
+    inNumero2.grid()
+def calculo7(): #Calculo final.
     asignarTexto(textUsuario, "El numero es...")
-    num2Cuenta = int(inNumero2.get())
-    inNumero1.pack_forget()
-    inNumero2.pack_forget()
-    r1 =int((num2Cuenta-2)/2)
-    r2 =int((num2Cuenta+2)/2)
-    numR = str(r1) + str(r2)
-    lblResultado.pack()
+    # num1Cuenta = int(inNumero1.get())
+    # num2Cuenta = int(inNumero2.get())
+    # num1Cuenta = 0
+    # r1 =int((num2Cuenta-2)/2)
+    # r2 =int((num2Cuenta+2)/2)
+    # numR = str(r1) + str(r2)
+
+    
+    inNumero1.grid_remove()
+    inNumero2.grid_remove()
+    lblResultado.grid()
+    numR=calcularRTA(int(inNumero1.get()), int(inNumero2.get()))
     asignarTexto(lblResultado, f"¡{numR}!")
 def calculo8():
     asignarTexto(textUsuario, "Necesito que pienses... Un numero de 2 cifras no iguales.")
@@ -121,10 +148,10 @@ programFrame.pack()
 
 #Botones
 btnIdioma = Button(programFrame, textvariable=btnIdiomaMsg, command= cambiarIdiomabtn)
-btnIdioma.pack()
+btnIdioma.grid()
 
 btnIngresar = Button(programFrame, textvariable=btnCalcMsg, command=cambiarPaso)
-btnIngresar.pack()
+btnIngresar.grid()
 
 #Input
 inNumero1 = Entry(programFrame)
@@ -137,10 +164,13 @@ inNumero2 = Entry(programFrame)
 inNumero2.bind("<Button-1>", lambda e: inNumero2.delete(0, END))
 inNumero2.insert(0, "Segundo Numero")
 
+#RadioButton
+RadioMenor = Radiobutton(programFrame, variable=mayorOmenor, text="Menor", value=2)
+RadioMayor = Radiobutton(programFrame, variable=mayorOmenor, text="Mayor", value=1)
 
 #Label
 textUsuario=Label(programFrame, text="Bienvenido, voy a adivinar el numero que pienses c:")
-textUsuario.pack()
+textUsuario.grid()
 lblResultado=Label(programFrame, text="El numero que pensaste es ...")
 
 
