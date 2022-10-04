@@ -151,6 +151,9 @@ def cambiarPaso():
 
         
         
+def asd():
+    pass
+
 
 def calculo1():
     if Lenguaje != True:
