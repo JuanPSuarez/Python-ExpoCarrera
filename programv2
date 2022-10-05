@@ -1,0 +1,149 @@
+from tkinter import *
+from tkinter import messagebox
+
+
+# def calcularRTA(n1, n2):
+
+#     pivot = n1 / 9
+
+#     if radioVar.get() == 1:
+#          d1 = (n2 - pivot) / 2
+#          d2 = (n2 + pivot) / 2
+#          rta = int(d1) * 10 + int(d2)
+    
+#     if radioVar.get() == 2:
+#          d1 = (n2 - pivot) / 2
+#          d2 = (n2 + pivot) / 2
+#          rta = int(d2) * 10 + int(d1)
+
+#     return rta
+
+
+ventana = Tk()
+ventana.geometry("500x500")
+ventana.title("Adivina, adiviniador")
+
+
+programaFr = Frame(ventana).pack()
+
+#Funciones
+
+
+def calcularRTA(n1, n2):
+
+    pivot = n1 / 9
+    if radioVar.get() == 1:
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        rta = int(d1) * 10 + int(d2)
+    
+    
+    if radioVar.get() == 2:
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        rta = int(d2) * 10 + int(d1)
+    return rta
+
+
+#Messages.
+    #Texto principal
+class msj:
+
+    msg0 = "Bienvenido, voy a adivinar el numero que pienses c:"
+    msg1 = "Necesito que pienses... Un numero de 2 cifras no iguales."
+    msg2 = "Inverti el orden de las cifras."
+    msg3 = "¿El nuevo número es mayor o menor que el primero?."
+    msg4 = "Entonces, restá el número que pensaste del nuevo número?."
+    msg5 = "Ahora sumá las cifras del número que pensaste al principio."
+    msg6 = "Decime los números que obtuviste."
+    msg7 = "El numero es..."
+    arrMsg = {msg0,msg1,msg2,msg3,msg4,msg5,msg6,msg7}
+
+        #Botones
+    bmsg0 = "Comenzar"
+    bmsg1 = "Siguiente"
+    bmsg2 = "Calcular"
+    bmsg3 = "Finalizar"
+
+def states ():
+    msg = txtPrincipalVar.get()
+    match msg:
+        case msj.msg0:
+            txtPrincipalVar.set(msj.msg1)
+            btnVar.set(msj.bmsg1)
+        case msj.msg1:
+            txtPrincipalVar.set(msj.msg2)
+        case msj.msg2:
+            txtPrincipalVar.set(msj.msg3)
+            radioMayor.pack()
+            radioMenor.pack()
+        case msj.msg3:
+            try:
+                int(radioVar.get())
+                txtPrincipalVar.set(msj.msg4)
+                radioMayor.pack_forget()
+                radioMenor.pack_forget()
+            except ValueError:
+                messagebox.showerror(title="Opcion inválida.", message="Seleccione si es mayor o menor.")
+        case msj.msg4:
+            txtPrincipalVar.set(msj.msg5)
+        case msj.msg5:
+            txtPrincipalVar.set(msj.msg6)
+            btnVar.set(msj.bmsg2)
+            num1Form.pack()
+            num2Form.pack()
+            
+        case msj.msg6:
+            try:
+                int(num1Form.get()) and int(num2Form.get())
+                txtPrincipalVar.set(msj.msg7)
+                btnVar.set(msj.bmsg3)
+                num1Form.pack_forget()
+                num2Form.pack_forget()                
+                
+            except ValueError:
+                messagebox.showerror(title="INGRESO INCORRECTO", message="No se acepta campos vacios o caracteres que no sean números.")
+            a = calcularRTA(int(num1Form.get()), int(num2Form.get()))
+            txtResultadoVar.set(a)
+
+        case msj.msg7:
+            txtPrincipalVar.set(msj.msg0)
+            btnVar.set(msj.bmsg0)
+            txtResultadoVar.set("")
+            radioVar.set("")
+
+
+
+
+#Sets
+txtPrincipalVar = StringVar()
+txtPrincipalVar.set(msj.msg0)
+
+txtResultadoVar = IntVar()
+txtResultadoVar.set("")
+
+
+radioVar = StringVar()
+radioVar.set(" ")
+
+btnVar = StringVar()
+btnVar.set(msj.bmsg0)
+
+
+#Label
+
+textoPrincipal = Label(programaFr, textvariable=txtPrincipalVar).pack()
+textoResultado = Label(programaFr, textvariable=txtResultadoVar).pack()
+
+#Radio Button
+radioMayor = Radiobutton(programaFr, text="Mayor",variable =radioVar,  value=1)
+radioMenor = Radiobutton(programaFr, text="Menor",variable =radioVar,  value=2)
+
+#Button
+next = Button(programaFr, textvariable=btnVar, command=states).pack()
+
+#Entrada
+num1Form = Entry(programaFr)
+num2Form = Entry(programaFr)
+
+ventana.mainloop()
