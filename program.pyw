@@ -179,11 +179,8 @@ def calculo3():
 
     
 def calculo4():
-    if  mayorOmenor.get() !=1 or mayorOmenor.get()!=2:
-        messagebox.showwarning(title="Seleccione numero.", message="Debe seleccionar si el numero es mayor o menor")
-        calculo3()
-        btnCalcMsg.set("Paso 3")
-    else:
+
+
         if Lenguaje != True:
             asignarTexto(textUsuario, "Entonces, restá el número que pensaste del nuevo número?")
         else:

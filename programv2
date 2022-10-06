@@ -25,24 +25,12 @@ ventana.title("Adivina, adiviniador")
 
 
 programaFr = Frame(ventana).pack()
-
+a=int
 #Funciones
+rta = int
 
 
-def calcularRTA(n1, n2):
-
-    pivot = n1 / 9
-    if radioVar.get() == 1:
-        d1 = (n2 - pivot) / 2
-        d2 = (n2 + pivot) / 2
-        rta = int(d1) * 10 + int(d2)
     
-    
-    if radioVar.get() == 2:
-        d1 = (n2 - pivot) / 2
-        d2 = (n2 + pivot) / 2
-        rta = int(d2) * 10 + int(d1)
-    return rta
 
 
 #Messages.
@@ -64,6 +52,7 @@ class msj:
     bmsg1 = "Siguiente"
     bmsg2 = "Calcular"
     bmsg3 = "Finalizar"
+
 
 def states ():
     msg = txtPrincipalVar.get()
@@ -99,12 +88,14 @@ def states ():
                 txtPrincipalVar.set(msj.msg7)
                 btnVar.set(msj.bmsg3)
                 num1Form.pack_forget()
-                num2Form.pack_forget()                
+                num2Form.pack_forget()  
+                a = (calcularRTA((num1Form.get()), num2Form.get()))
+                txtResultadoVar.set(a)
+                
                 
             except ValueError:
                 messagebox.showerror(title="INGRESO INCORRECTO", message="No se acepta campos vacios o caracteres que no sean números.")
-            a = calcularRTA(int(num1Form.get()), int(num2Form.get()))
-            txtResultadoVar.set(a)
+
 
         case msj.msg7:
             txtPrincipalVar.set(msj.msg0)
@@ -119,7 +110,7 @@ def states ():
 txtPrincipalVar = StringVar()
 txtPrincipalVar.set(msj.msg0)
 
-txtResultadoVar = IntVar()
+txtResultadoVar = StringVar()
 txtResultadoVar.set("")
 
 
@@ -136,8 +127,8 @@ textoPrincipal = Label(programaFr, textvariable=txtPrincipalVar).pack()
 textoResultado = Label(programaFr, textvariable=txtResultadoVar).pack()
 
 #Radio Button
-radioMayor = Radiobutton(programaFr, text="Mayor",variable =radioVar,  value=1)
-radioMenor = Radiobutton(programaFr, text="Menor",variable =radioVar,  value=2)
+radioMayor = Radiobutton(programaFr, text="Mayor",variable =radioVar, value=1)
+radioMenor = Radiobutton(programaFr, text="Menor",variable =radioVar, value=2)
 
 #Button
 next = Button(programaFr, textvariable=btnVar, command=states).pack()
@@ -145,5 +136,22 @@ next = Button(programaFr, textvariable=btnVar, command=states).pack()
 #Entrada
 num1Form = Entry(programaFr)
 num2Form = Entry(programaFr)
+
+def calcularRTA(n1, n2):
+    n1  = int(n1)
+    n2 = int(n2)
+    pivot = n1 / 9
+    if radioVar.get() == 1:
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        res = int(d1) * 10 + int(d2)
+
+    
+    if radioVar.get() == 2:
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        res = int(d2) * 10 + int(d1)
+
+    return res
 
 ventana.mainloop()
