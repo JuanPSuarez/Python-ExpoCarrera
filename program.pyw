@@ -12,21 +12,20 @@ mayorOmenor = IntVar()
 
 Lenguaje = bool
 
-
+#Aca si funciona wtf 👀 linea 205 uso la funcion.
 def calcularRTA(n1, n2):
 
     pivot = n1 / 9
 
     if mayorOmenor.get() == 1:
-         d1 = (n2 - pivot) / 2
-         d2 = (n2 + pivot) / 2
-         rta = int(d1) * 10 + int(d2)
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        rta = int(d1) * 10 + int(d2)
     
     if mayorOmenor.get() == 2:
-         d1 = (n2 - pivot) / 2
-         d2 = (n2 + pivot) / 2
-         rta = int(d2) * 10 + int(d1)
-
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        rta = int(d2) * 10 + int(d1)
     return rta
 
 

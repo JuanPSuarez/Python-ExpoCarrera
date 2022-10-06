@@ -27,10 +27,25 @@ ventana.title("Adivina, adiviniador")
 programaFr = Frame(ventana).pack()
 a=int
 #Funciones
-rta = int
 
+
+#aca no funciona 👀 linea 107 uso la funcion.
+def calcularRTA(n1, n2):
+
+    n1  = int(n1)
+    n2 = int(n2)
+    pivot = n1 / 9
+    if radioVar.get() == 1:
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        res = int(d1) * 10 + int(d2)
 
     
+    if radioVar.get() == 2:
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        res = int(d2) * 10 + int(d1)
+    return res
 
 
 #Messages.
@@ -137,21 +152,6 @@ next = Button(programaFr, textvariable=btnVar, command=states).pack()
 num1Form = Entry(programaFr)
 num2Form = Entry(programaFr)
 
-def calcularRTA(n1, n2):
-    n1  = int(n1)
-    n2 = int(n2)
-    pivot = n1 / 9
-    if radioVar.get() == 1:
-        d1 = (n2 - pivot) / 2
-        d2 = (n2 + pivot) / 2
-        res = int(d1) * 10 + int(d2)
 
-    
-    if radioVar.get() == 2:
-        d1 = (n2 - pivot) / 2
-        d2 = (n2 + pivot) / 2
-        res = int(d2) * 10 + int(d1)
-
-    return res
 
 ventana.mainloop()
