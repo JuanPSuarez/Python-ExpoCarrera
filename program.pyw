@@ -15,7 +15,7 @@ lang.set("Español")
 #Messages.
     #Texto principal y texto botones.
 class msj:
-    if lang.get() == "Español":
+
         msg0 = "Bienvenido, voy a adivinar el numero que pienses c:"
         msg1 = "Necesito que pienses... Un numero de 2 cifras no iguales."
         msg2 = "Inverti el orden de las cifras."
@@ -32,23 +32,23 @@ class msj:
 
         msgBRadioMay = "Mayor"
         msgBRadioMen = "Menor"
-    else:
-        msg0 = "Welcome..."
-        msg1 = "Think of a two-digit number (not equal)."
-        msg2 = "Now reverse the order of the figures."
-        msg3 = "Is the new number higher or lower than the first?."
-        msg4 = "So, subtract the number you thought first from the new number."
-        msg5 = "ow add the numbers of the number you thought at the beginning."
-        msg6 = "Type the numbers you got ."
-        msg7 = "The number is...."
 
-        bmsg0 = "Start"
-        bmsg1 = "Next"
-        bmsg2 = "Calculate"
-        bmsg3 = "Finish"
+        Emsg0 = "Welcome..."
+        Emsg1 = "Think of a two-digit number (not equal)."
+        Emsg2 = "Now reverse the order of the figures."
+        Emsg3 = "Is the new number higher or lower than the first?."
+        Emsg4 = "So, subtract the number you thought first from the new number."
+        Emsg5 = "ow add the numbers of the number you thought at the beginning."
+        Emsg6 = "Type the numbers you got ."
+        Emsg7 = "The number is...."
 
-        msgBRadioMay = "Major"
-        msgBRadioMen = "Minor"
+        Ebmsg0 = "Start"
+        Ebmsg1 = "Next"
+        Ebmsg2 = "Calculate"
+        Ebmsg3 = "Finish"
+
+        EmsgBRadioMay = "Higher"
+        EmsgBRadioMen = "Lower"
 
 #Sets
 txtPrincipalVar = StringVar()
@@ -95,53 +95,99 @@ def calcularRTA(n1, n2):
 
 def states ():
     msg = txtPrincipalVar.get()
-    match msg:
-        case msj.msg0:
-            txtPrincipalVar.set(msj.msg1)
-            btnVar.set(msj.bmsg1)
-        case msj.msg1:
-            txtPrincipalVar.set(msj.msg2)
-        case msj.msg2:
-            txtPrincipalVar.set(msj.msg3)
-            radioMayor.pack()
-            radioMenor.pack()
-        case msj.msg3:
-            try:
-                int(radioVar.get())
-                txtPrincipalVar.set(msj.msg4)
-                radioMayor.pack_forget()
-                radioMenor.pack_forget()
-            except ValueError:
-                messagebox.showerror(title="Opcion inválida.", message="Seleccione si es mayor o menor.")
-        case msj.msg4:
-            txtPrincipalVar.set(msj.msg5)
-        case msj.msg5:
-            txtPrincipalVar.set(msj.msg6)
-            btnVar.set(msj.bmsg2)
-            num1Form.pack()
-            num2Form.pack()   
-        case msj.msg6:
-            try:
-                int(num1Form.get()) and int(num2Form.get())
-                txtPrincipalVar.set(msj.msg7)
-                btnVar.set(msj.bmsg3)
-                num1Form.pack_forget()
-                num2Form.pack_forget()  
-                a = (calcularRTA((num1Form.get()), num2Form.get()))
-                txtResultadoVar.set(a)
-            except ValueError:
-                messagebox.showerror(title="INGRESO INCORRECTO", message="No se acepta campos vacios o caracteres que no sean números.")
-        case msj.msg7:
-            txtPrincipalVar.set(msj.msg0)
-            btnVar.set(msj.bmsg0)
-            txtResultadoVar.set("")
-            radioVar.set("")
-
-def changeLang():
     if lang.get() == "Español":
-        lang.set("English")
+        match msg:
+            case msj.msg0:
+                txtPrincipalVar.set(msj.msg1)
+                btnVar.set(msj.bmsg1)
+            case msj.msg1:
+                txtPrincipalVar.set(msj.msg2)
+            case msj.msg2:
+                txtPrincipalVar.set(msj.msg3)
+                radioMayor.pack()
+                radioMenor.pack()
+            case msj.msg3:
+                try:
+                    int(radioVar.get())
+                    txtPrincipalVar.set(msj.msg4)
+                    radioMayor.pack_forget()
+                    radioMenor.pack_forget()
+                except ValueError:
+                    messagebox.showerror(title="Opcion inválida", message="Seleccione si es mayor o menor.")
+            case msj.msg4:
+                txtPrincipalVar.set(msj.msg5)
+            case msj.msg5:
+                txtPrincipalVar.set(msj.msg6)
+                btnVar.set(msj.bmsg2)
+                num1Form.pack()
+                num2Form.pack()   
+            case msj.msg6:
+                try:
+                    int(num1Form.get()) and int(num2Form.get())
+                    txtPrincipalVar.set(msj.msg7)
+                    btnVar.set(msj.bmsg3)
+                    num1Form.pack_forget()
+                    num2Form.pack_forget()  
+                    a = (calcularRTA((num1Form.get()), num2Form.get()))
+                    txtResultadoVar.set(a)
+                except ValueError:
+                    messagebox.showerror(title="Ingreso incorrecto", message="El formulario solo acepta números.")
+            case msj.msg7:
+                txtPrincipalVar.set(msj.msg0)
+                btnVar.set(msj.bmsg0)
+                txtResultadoVar.set("")
+                radioVar.set("")
     else:
+        match msg:
+            case msj.Emsg0 | msj.msg0:
+                txtPrincipalVar.set(msj.Emsg1)
+                btnVar.set(msj.Ebmsg1)
+            case msj.Emsg1 | msj.msg1:
+                txtPrincipalVar.set(msj.Emsg2)
+            case msj.Emsg2 | msj.msg2:
+                txtPrincipalVar.set(msj.Emsg3)
+                radioMayor.pack()
+                radioMenor.pack()
+            case msj.Emsg3 | msj.msg3:
+                try:
+                    int(radioVar.get())
+                    txtPrincipalVar.set(msj.Emsg4)
+                    radioMayor.pack_forget()
+                    radioMenor.pack_forget()
+                except ValueError:
+                    messagebox.showerror(title="Invalid Option", message="Select if the number is higher or lower.")
+            case msj.Emsg4 | msj.msg4:
+                txtPrincipalVar.set(msj.Emsg5)
+            case msj.Emsg5 | msj.msg5:
+                txtPrincipalVar.set(msj.Emsg6)
+                btnVar.set(msj.Ebmsg2)
+                num1Form.pack()
+                num2Form.pack()   
+            case msj.Emsg6 | msj.msg6:
+                try:
+                    int(num1Form.get()) and int(num2Form.get())
+                    txtPrincipalVar.set(msj.Emsg7)
+                    btnVar.set(msj.Ebmsg3)
+                    num1Form.pack_forget()
+                    num2Form.pack_forget()  
+                    a = (calcularRTA((num1Form.get()), num2Form.get()))
+                    txtResultadoVar.set(a)
+                except ValueError:
+                    messagebox.showerror(title="Wrong Input", message="Form only accepts numbers.")
+            case msj.Emsg7 | msj.msg7:
+                txtPrincipalVar.set(msj.Emsg0)
+                btnVar.set(msj.Ebmsg0)
+                txtResultadoVar.set("")
+                radioVar.set("")
+def changeLang():
+    if lang.get() != "Español":
         lang.set("Español")
+        BotonRadioMayor.set(msj.msgBRadioMay)
+        BotonRadioMenor.set(msj.msgBRadioMen)
+    else:
+        lang.set("English")
+        BotonRadioMayor.set(msj.EmsgBRadioMay)
+        BotonRadioMenor.set(msj.EmsgBRadioMen)
     return lang
 
 
