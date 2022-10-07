@@ -1,272 +1,170 @@
 from tkinter import *
 from tkinter import messagebox
+from PIL import ImageTk, Image
 
 ventana = Tk()
-ventana.geometry("500x200")
-ventana.title("Adivina adivinador")
-ventana.config(bg="white")
-
-mayorOmenor = IntVar()
+ventana.geometry("500x500")
+ventana.title("Adivina, adiviniador")
 
 
 
-Lenguaje = bool
+programaFr = Frame(ventana).pack()
 
+lang = StringVar()
+lang.set("Español")
+#Messages.
+    #Texto principal y texto botones.
+class msj:
+    if lang.get() == "Español":
+        msg0 = "Bienvenido, voy a adivinar el numero que pienses c:"
+        msg1 = "Necesito que pienses... Un numero de 2 cifras no iguales."
+        msg2 = "Inverti el orden de las cifras."
+        msg3 = "¿El nuevo número es mayor o menor que el primero?."
+        msg4 = "Entonces, restá el número que pensaste del nuevo número?."
+        msg5 = "Ahora sumá las cifras del número que pensaste al principio."
+        msg6 = "Decime los números que obtuviste."
+        msg7 = "El numero es..."
+
+        bmsg0 = "Comenzar"
+        bmsg1 = "Siguiente"
+        bmsg2 = "Calcular"
+        bmsg3 = "Finalizar"
+
+        msgBRadioMay = "Mayor"
+        msgBRadioMen = "Menor"
+    else:
+        msg0 = "Welcome..."
+        msg1 = "Think of a two-digit number (not equal)."
+        msg2 = "Now reverse the order of the figures."
+        msg3 = "Is the new number higher or lower than the first?."
+        msg4 = "So, subtract the number you thought first from the new number."
+        msg5 = "ow add the numbers of the number you thought at the beginning."
+        msg6 = "Type the numbers you got ."
+        msg7 = "The number is...."
+
+        bmsg0 = "Start"
+        bmsg1 = "Next"
+        bmsg2 = "Calculate"
+        bmsg3 = "Finish"
+
+        msgBRadioMay = "Major"
+        msgBRadioMen = "Minor"
+
+#Sets
+txtPrincipalVar = StringVar()
+txtPrincipalVar.set(msj.msg0)
+
+txtResultadoVar = StringVar()
+txtResultadoVar.set("")
+
+BotonRadioMenor = StringVar()
+BotonRadioMenor.set(msj.msgBRadioMay)
+BotonRadioMayor = StringVar()
+BotonRadioMayor.set(msj.msgBRadioMen)
+
+radioVar = StringVar()
+radioVar.set(" ")
+
+btnVar = StringVar()
+btnVar.set(msj.bmsg0)
+
+
+
+
+#Funciones
 
 def calcularRTA(n1, n2):
 
+    n1  = int(n1)
+    n2 = int(n2)
     pivot = n1 / 9
+    if radioVar.get() == 1:
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        res = int(d1) * 10 + int(d2)
 
-    if mayorOmenor.get() == 1:
-         d1 = (n2 - pivot) / 2
-         d2 = (n2 + pivot) / 2
-         rta = int(d1) * 10 + int(d2)
     
-    if mayorOmenor.get() == 2:
-         d1 = (n2 - pivot) / 2
-         d2 = (n2 + pivot) / 2
-         rta = int(d2) * 10 + int(d1)
-
-    return rta
-
-
-def asignarTexto(a, b):
-    return a.config(text=b)
-#Funciones cambios de estado. 
-# #Español
-def cambiarLenguaje():
-    ventana.title("Adivina adivinador")
-    btnIdiomaMsg.set("Español")
-    # m = btnCalcMsg.get().split(" ", 1)[1]
-    # m.join("Step ")
-    # btnCalcMsg.set(m)
-    match btnCalcMsg.get():
-        case "Start":
-            btnCalcMsg.set("Comenzar")
-        case "Step 1":
-            btnCalcMsg.set("Paso 1")
-        case "Step 2":
-            btnCalcMsg.set("Paso 2")
-        case "Step 3":
-            btnCalcMsg.set("Paso 3")
-        case "Step 4":
-            btnCalcMsg.set("Paso 4")
-        case "Step 5":
-            btnCalcMsg.set("Paso 5")
-        case "Step 6":
-            btnCalcMsg.set("Paso 6")
-        case "Finish":
-            btnCalcMsg.set("Finalizar")
+    else:
+        radioVar.get() == 2
+        d1 = (n2 - pivot) / 2
+        d2 = (n2 + pivot) / 2
+        res = int(d2) * 10 + int(d1)
+    return res
 
 
 
-#Ingles
+def states ():
+    msg = txtPrincipalVar.get()
+    match msg:
+        case msj.msg0:
+            txtPrincipalVar.set(msj.msg1)
+            btnVar.set(msj.bmsg1)
+        case msj.msg1:
+            txtPrincipalVar.set(msj.msg2)
+        case msj.msg2:
+            txtPrincipalVar.set(msj.msg3)
+            radioMayor.pack()
+            radioMenor.pack()
+        case msj.msg3:
+            try:
+                int(radioVar.get())
+                txtPrincipalVar.set(msj.msg4)
+                radioMayor.pack_forget()
+                radioMenor.pack_forget()
+            except ValueError:
+                messagebox.showerror(title="Opcion inválida.", message="Seleccione si es mayor o menor.")
+        case msj.msg4:
+            txtPrincipalVar.set(msj.msg5)
+        case msj.msg5:
+            txtPrincipalVar.set(msj.msg6)
+            btnVar.set(msj.bmsg2)
+            num1Form.pack()
+            num2Form.pack()   
+        case msj.msg6:
+            try:
+                int(num1Form.get()) and int(num2Form.get())
+                txtPrincipalVar.set(msj.msg7)
+                btnVar.set(msj.bmsg3)
+                num1Form.pack_forget()
+                num2Form.pack_forget()  
+                a = (calcularRTA((num1Form.get()), num2Form.get()))
+                txtResultadoVar.set(a)
+            except ValueError:
+                messagebox.showerror(title="INGRESO INCORRECTO", message="No se acepta campos vacios o caracteres que no sean números.")
+        case msj.msg7:
+            txtPrincipalVar.set(msj.msg0)
+            btnVar.set(msj.bmsg0)
+            txtResultadoVar.set("")
+            radioVar.set("")
+
 def changeLang():
-    # b = btnCalcMsg.get().split(" ", 1)[0]
-    ventana.title("Guess Guesser")
-    btnIdiomaMsg.set("English")
-    match btnCalcMsg.get():
-        case "Comenzar":
-            btnCalcMsg.set("Start")
-        case "Paso 1":
-            btnCalcMsg.set("Step 1")
-        case "Paso 2":
-            btnCalcMsg.set("Step 2")
-        case "Paso 3":
-            btnCalcMsg.set("Step 3")
-        case "Paso 4":
-            btnCalcMsg.set("Step 4")
-        case "Paso 5":
-            btnCalcMsg.set("Step 5")
-        case "Paso 6":
-            btnCalcMsg.set("Step 6")
-        case "Finalizar":
-            btnCalcMsg.set("Finish")
-
-
-#Se lee en que estado esta el boton idioma.
-def cambiarIdiomabtn():
-    if btnIdiomaMsg.get()  == "Español":
-        changeLang()
+    if lang.get() == "Español":
+        lang.set("English")
     else:
-        cambiarLenguaje()
-        
-
-#Se cambia paso. Se usa switch. python 3.10
-def cambiarPaso():
-
-    
-    match btnCalcMsg.get():
-        case "Comenzar":
-            btnCalcMsg.set("Paso 1")
-            calculo1()
-        case "Paso 1":
-            btnCalcMsg.set("Paso 2")
-            calculo2()
-        case "Paso 2":
-            btnCalcMsg.set("Paso 3")
-            calculo3()
-        case "Paso 3":
-            btnCalcMsg.set("Paso 4")
-            calculo4()
-        case "Paso 4":
-            btnCalcMsg.set("Paso 5")
-            calculo5()
-        case "Paso 5":
-            btnCalcMsg.set("Paso 6")
-            calculo6()
-        case "Paso 6":
-            btnCalcMsg.set("Finalizar")
-            calculo7()
-        case "Finalizar":
-            btnCalcMsg.set("Comenzar")
-            calculo8()
-            
+        lang.set("Español")
+    return lang
 
 
-        case "Start":
-            btnCalcMsg.set("Step 1")
-            calculo1()
-        case "Step 1":
-            btnCalcMsg.set("Step 2")
-            calculo2()
-        case "Step 2":
-            btnCalcMsg.set("Step 3")
-            calculo3()  
-        case "Step 3":
-            btnCalcMsg.set("Step 4")
-            calculo4()
-        case "Step 4":
-            btnCalcMsg.set("Step 5")
-            calculo5()
-        case "Step 5":
-            btnCalcMsg.set("Step 6")
-            calculo6()
-        case "Step 6":
-            btnCalcMsg.set("Finish")
-            calculo7()
-        case "Finish":
-            btnCalcMsg.set("Start")
-            calculo8()
-
-        
-        
-def asd():
-    pass
-
-
-def calculo1():
-    if Lenguaje != True:
-        asignarTexto(textUsuario, "Necesito que pienses... Un numero de 2 cifras no iguales.")
-    else:
-        asignarTexto(textUsuario, "Think of a two-digit number (not equal).")
-
-def calculo2():
-    if Lenguaje != True:
-        asignarTexto(textUsuario, "Inverti el orden de las cifras.")
-    else:
-        asignarTexto(textUsuario, "Now reverse the order of the figures.")
-
-
-def calculo3():
-    if Lenguaje != True:
-        asignarTexto(textUsuario, "¿El nuevo número es mayor o menor que el primero?")
-    else:
-        asignarTexto(textUsuario, "Is the new number higher or lower than the first")
-
-    RadioMenor.grid()
-    RadioMayor.grid()
-
-    
-def calculo4():
-    if  mayorOmenor.get() !=1 or mayorOmenor.get()!=2:
-        messagebox.showwarning(title="Seleccione numero.", message="Debe seleccionar si el numero es mayor o menor")
-        calculo3()
-        btnCalcMsg.set("Paso 3")
-    else:
-        if Lenguaje != True:
-            asignarTexto(textUsuario, "Entonces, restá el número que pensaste del nuevo número?")
-        else:
-            asignarTexto(textUsuario, "So, subtract the number you thought first from the new number.")
-
-        RadioMenor.grid_remove()
-        RadioMayor.grid_remove()
-
-    
-def calculo5():
-
-
-    asignarTexto(textUsuario, "Ahora sumá las cifras del número que pensaste al principio")
-def calculo6():
-    asignarTexto(textUsuario, "Decime los números que obtuviste")
-    inNumero1.grid()
-    inNumero2.grid()
-def calculo7(): #Calculo final.
-    asignarTexto(textUsuario, "El numero es...")   
-    inNumero1.grid_remove()
-    inNumero2.grid_remove()
-    lblResultado.grid()
-    numR=calcularRTA(int(inNumero1.get()), int(inNumero2.get()))
-    asignarTexto(lblResultado, f"¡{numR}!")
-def calculo8():
-    asignarTexto(textUsuario, "Necesito que pienses... Un numero de 2 cifras no iguales.")
-    asignarTexto(lblResultado, "")
-
-
-
-btnIdiomaMsg = StringVar()
-btnCalcMsg = StringVar()
-btnIdiomaMsg.set("Español")
-btnCalcMsg.set("Comenzar")
-
-if btnCalcMsg.get() == "Español":
-    Lenguaje == True
-else:
-    Lenguaje == False
-
-#-------------------------------
-
-#imagen
-# img = PhotoImage("./download.png")
-# imglbl = Label(ventana, img)
-# imglbl.pack()
-
-
-#Frame
-programFrame = Frame (ventana, bg="white")
-programFrame.pack()
-
-#Botones
-btnIdioma = Button(programFrame, textvariable=btnIdiomaMsg, command= cambiarIdiomabtn)
-btnIdioma.grid(sticky="nsew")
-
-btnIngresar = Button(programFrame, textvariable=btnCalcMsg, command=cambiarPaso)
-btnIngresar.grid()
-
-#Input
-inNumero1 = Entry(programFrame)
-#Al hacer click, se borra el texto
-inNumero1.bind("<Button-1>", lambda e: inNumero1.delete(0, END))
-inNumero1.insert(0, "Primer numero")
-
-inNumero2 = Entry(programFrame)
-#Al hacer click, se borra el texto
-inNumero2.bind("<Button-1>", lambda e: inNumero2.delete(0, END))
-inNumero2.insert(0, "Segundo Numero")
-
-#RadioButton
-RadioMayor = Radiobutton(programFrame, variable=mayorOmenor, text="Mayor", value=1)
-RadioMenor = Radiobutton(programFrame, variable=mayorOmenor, text="Menor", value=2)
 
 #Label
-textUsuario=Label(programFrame, text="Bienvenido, voy a adivinar el numero que pienses c:")
-textUsuario.grid()
-lblResultado=Label(programFrame, text="El numero que pensaste es ...")
 
-# if btnIdiomaMsg.get()  == "Español":
-#         Lenguaje = True
-# else:
-#     Lenguaje = False
+textoPrincipal = Label(programaFr, textvariable=txtPrincipalVar).pack()
+textoResultado = Label(programaFr, textvariable=txtResultadoVar).pack()
+
+#Radio Button
+radioMayor = Radiobutton(programaFr, textvariable=BotonRadioMayor,variable =radioVar, value=1)
+radioMenor = Radiobutton(programaFr, textvariable=BotonRadioMenor,variable =radioVar, value=2)
+
+#Button
+next = Button(programaFr, textvariable=btnVar, command=states).pack()
+idioma = Button(programaFr, textvariable=lang, command=changeLang).pack()
+#Entrada
+num1Form = Entry(programaFr)
+num2Form = Entry(programaFr)
+
+#Imagen
+isauiImg = ImageTk.PhotoImage(Image.open("isauiLogo.png"))
+isauiLBL = Label(programaFr, image = isauiImg).place(anchor="sw",relx=0, rely=1)
 
 
 ventana.mainloop()
