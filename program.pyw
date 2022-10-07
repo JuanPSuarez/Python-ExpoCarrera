@@ -97,16 +97,16 @@ def states ():
     msg = txtPrincipalVar.get()
     if lang.get() == "Español":
         match msg:
-            case msj.msg0:
+            case msj.msg0 | msj.Emsg0:
                 txtPrincipalVar.set(msj.msg1)
                 btnVar.set(msj.bmsg1)
-            case msj.msg1:
+            case msj.msg1 | msj.Emsg1:
                 txtPrincipalVar.set(msj.msg2)
             case msj.msg2:
                 txtPrincipalVar.set(msj.msg3)
                 radioMayor.pack()
                 radioMenor.pack()
-            case msj.msg3:
+            case msj.msg3 | msj.Emsg3:
                 try:
                     int(radioVar.get())
                     txtPrincipalVar.set(msj.msg4)
@@ -114,14 +114,14 @@ def states ():
                     radioMenor.pack_forget()
                 except ValueError:
                     messagebox.showerror(title="Opcion inválida", message="Seleccione si es mayor o menor.")
-            case msj.msg4:
+            case msj.msg4 | msj.Emsg4:
                 txtPrincipalVar.set(msj.msg5)
-            case msj.msg5:
+            case msj.msg5 | msj.Emsg5:
                 txtPrincipalVar.set(msj.msg6)
                 btnVar.set(msj.bmsg2)
                 num1Form.pack()
                 num2Form.pack()   
-            case msj.msg6:
+            case msj.msg6 | msj.Emsg6:
                 try:
                     int(num1Form.get()) and int(num2Form.get())
                     txtPrincipalVar.set(msj.msg7)
@@ -132,7 +132,7 @@ def states ():
                     txtResultadoVar.set(a)
                 except ValueError:
                     messagebox.showerror(title="Ingreso incorrecto", message="El formulario solo acepta números.")
-            case msj.msg7:
+            case msj.msg7 | msj.Emsg7:
                 txtPrincipalVar.set(msj.msg0)
                 btnVar.set(msj.bmsg0)
                 txtResultadoVar.set("")
